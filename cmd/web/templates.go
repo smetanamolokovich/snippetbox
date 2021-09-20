@@ -16,6 +16,7 @@ type templateData struct {
 	Flash           string
 	IsAuthenticated bool
 	Snippet         *models.Snippet
+	User            *models.User
 	Snippets        []*models.Snippet
 }
 
