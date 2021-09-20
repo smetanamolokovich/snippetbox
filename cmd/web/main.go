@@ -21,6 +21,7 @@ type contextKey string
 const contextKeyIsAuthenticated = contextKey("isAuthenticated")
 
 type application struct {
+	debug         bool
 	errorLog      *log.Logger
 	infoLog       *log.Logger
 	session       *sessions.Session
@@ -39,6 +40,7 @@ type application struct {
 }
 
 func main() {
+	debug := flag.Bool("debug", false, "Debug mode")
 	addr := flag.String("addr", ":4000", "Network address HTTP")
 	dns := flag.String("dns", "web:pass@/snippetbox?parseTime=true", "Database DNS")
 	secret := flag.String("secret", "s6Ndh+pPbnzHbS*+9Pk8qGWhTzbpa@ge", "Secret key")
@@ -63,6 +65,7 @@ func main() {
 	session.Secure = true
 
 	app := &application{
+		debug:         *debug,
 		infoLog:       infoLog,
 		errorLog:      errorLog,
 		session:       session,
