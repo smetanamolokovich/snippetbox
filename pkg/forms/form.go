@@ -79,6 +79,12 @@ func (f *Form) PermittedValues(field string, opts ...string) {
 	f.Errors.Add(field, "This field is invalid")
 }
 
+func (f *Form) MatchFields(field1, field2 string) {
+	if !strings.EqualFold(field1, field2) {
+		f.Errors.Add(field2, "Passwords do not match")
+	}
+}
+
 func (f *Form) Valid() bool {
 	return len(f.Errors) == 0
 }
