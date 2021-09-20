@@ -26,7 +26,7 @@ func (f *Form) Required(fields ...string) {
 	for _, field := range fields {
 		value := f.Get(field)
 		if strings.TrimSpace(value) == "" {
-			f.Errors.Add(field, "This field cannot be empty")
+			f.Errors.Add(field, "This field cannot be blank")
 		}
 	}
 }
@@ -37,7 +37,7 @@ func (f *Form) MinLength(field string, d int) {
 		return
 	}
 
-	if utf8.RuneCountInString(value) > d {
+	if utf8.RuneCountInString(value) < d {
 		f.Errors.Add(field, fmt.Sprintf("This field is too short (minimum is %d characters)", d))
 	}
 }
@@ -60,7 +60,7 @@ func (f *Form) MatchesPattern(field string, pattern *regexp.Regexp) {
 	}
 
 	if !pattern.MatchString(value) {
-		f.Errors.Add(field, "This field is not valid")
+		f.Errors.Add(field, "This field is invalid")
 	}
 }
 

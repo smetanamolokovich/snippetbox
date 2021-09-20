@@ -12,6 +12,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/golangcollege/sessions"
+	"github.com/smetanamolokovich/snippetbox/pkg/models"
 	"github.com/smetanamolokovich/snippetbox/pkg/models/mysql"
 )
 
@@ -20,12 +21,20 @@ type contextKey string
 const contextKeyIsAuthenticated = contextKey("isAuthenticated")
 
 type application struct {
-	infoLog       *log.Logger
 	errorLog      *log.Logger
-	snippets      *mysql.SnippetModel
-	users         *mysql.UserModel
+	infoLog       *log.Logger
 	session       *sessions.Session
 	templateCache map[string]*template.Template
+	snippets      interface {
+		Insert(string, string, string) (int, error)
+		Get(int) (*models.Snippet, error)
+		Latest() ([]*models.Snippet, error)
+	}
+	users interface {
+		Insert(string, string, string) error
+		Authenticate(string, string) (int, error)
+		Get(int) (*models.User, error)
+	}
 }
 
 func main() {
