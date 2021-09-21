@@ -2,4 +2,6 @@
 
 ## Development
 
-##### `go run cmd/web/*`
+```bash
+go run ./cmd/web/
+````
